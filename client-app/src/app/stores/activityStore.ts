@@ -2,11 +2,10 @@ import {observable, action, computed, configure, runInAction} from 'mobx';
 import { createContext, SyntheticEvent } from 'react';
 import { IActivity } from '../models/Activity';
 import agent from '../api/agent';
-import 'mobx-react-lite/batchingForReactDom';
 
 configure({enforceActions: 'always'});
 
-export class ActivityStore {
+class ActivityStore {
     @observable activityRegistry = new Map();
     @observable activity: IActivity | null = null;
     @observable loadingInitial = false;
@@ -58,9 +57,9 @@ export class ActivityStore {
                 });
             } catch (error) {
                 runInAction('getting activity error',() => {
-                    console.log(error);
                     this.loadingInitial = false;
                 });
+                console.log(error);
             }
         }
     }
